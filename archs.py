@@ -147,10 +147,3 @@ class SRNN(nn.Module):
         )
         return block
 
-
-if __name__ == '__main__':
-    a = torch.zeros((10,3,240,240))
-    net = UNet(4)
-    params = list(filter(lambda p: p.requires_grad, net.parameters()))
-    print(params)
-
