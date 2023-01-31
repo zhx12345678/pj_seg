@@ -3,20 +3,6 @@ import torch
 import torch.nn.functional as F
 
 
-def iou_score(output, target):
-    smooth = 1e-5
-
-    if torch.is_tensor(output):
-        output = torch.sigmoid(output).data.cpu().numpy()
-    if torch.is_tensor(target):
-        target = target.data.cpu().numpy()
-    output_ = output > 0.5
-    target_ = target > 0.5
-
-    intersection = (output_ & target_).sum()
-    union = (output_ | target_).sum()
-
-    return (intersection + smooth) / (union + smooth)
 
 
 def iou_score_multiple_class(output,target):
@@ -38,16 +24,6 @@ def iou_score_multiple_class(output,target):
 
 
 
-def dice_coef(output, target):
-    smooth = 1
-
-    output = torch.sigmoid(output).view(-1).data.cpu().numpy()
-    target = target.view(-1).data.cpu().numpy()
-    intersection = (output * target).sum()
-
-    return (2. * intersection) / \
-        (output.sum() + target.sum() + smooth)
-
 def dice_score(output,target):
     smooth = 1
     if torch.is_tensor(output):
@@ -65,10 +41,4 @@ def dice_score(output,target):
 
     return np.array(dice_score_list)
 
-
-if __name__ == '__main__':
-    output = torch.randn(16,4,96,96)
-    target = torch.randint(0,2,(16,5,96,96))
-    print(target)
-    print(iou_score_multiple_class(output,target))
 
