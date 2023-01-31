@@ -82,25 +82,4 @@ class Dataset(torch.utils.data.Dataset):
         
         return img, mask, {'img_id': img_id},pos
 
-if __name__ == '__main__':
-    img_ids = [i[0:-4] for i in
-               os.listdir('../pj_seg/data/images')]
-    train_img_ids, val_img_ids = train_test_split(img_ids, test_size=0.2, random_state=41)
-    train_transform = Compose([
-        albumentations.RandomRotate90(),
-        albumentations.Flip(),
-        albumentations.RandomBrightnessContrast(),
-        albumentations.RandomCrop(width=96,height = 96),
-        # transforms.Normalize(),
-    ])
-    train_dataset = Dataset(
-        img_ids=train_img_ids,
-        img_dir=os.path.join('../pj_seg/data/images'),
-        mask_dir=os.path.join('../pj_seg/data/masks'),
-        img_ext='.png',
-        mask_ext='.png',
-        num_classes=4,
-        transform=train_transform)
-    print(train_dataset[1])
-
 
