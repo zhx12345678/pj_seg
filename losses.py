@@ -45,9 +45,4 @@ class Exponential_Logarithmic_Loss(nn.Module):
         return loss
 
 
-if __name__ == '__main__':
-    loss = BCEDiceLoss()
-    input = torch.randn((16,4,96,96))
-    output = torch.randn((16,4,96,96))
-    loss(input,output)
 
